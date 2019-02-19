@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: springboard
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: smart-07
+Implementation-Vendor-Id: com.eteam
+Build-Jdk: 1.8.0_201
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/springboard
+Created-By: Maven Integration for Eclipse
+

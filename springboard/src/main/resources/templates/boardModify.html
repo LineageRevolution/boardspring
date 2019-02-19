@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<body>
+		<form action="/boardModify" method="post">
+		<input type="hidden" name="boardNo" th:value="${board.boardNo}">
+		<div class="form-group">
+            <label for="inputNo"></label>
+            <input type="hidden" class="form-control" name="boardNo" th:readonly="${board.boardNo}" readonly="readonly">
+        </div>
+		<div class="form-group">
+            <label for="inputTitle">title</label>
+            <input type="text" class="form-control" name="boardTitle" th:value="${board.boardTitle}">
+        </div>
+        <div class="form-group">
+            <label for="inputContent">content</label>
+            <input type="text" class="form-control" name="boardContent" th:value="${board.boardContent}">
+        </div>
+        <div class="form-group">
+            <label for="inputUser">name</label>
+            <input type="text" class="form-control" name="boardUser" th:value="${board.boardUser}" readonly="readonly">
+        </div>
+        <div class="form-group">
+            <label for="inputPw">password</label>
+            <input type="text" class="form-control" name="boardPw" th:value="${board.boardPw}">
+        </div>
+          <div class="form-group text-center">
+            <input type="submit" value="수정"> 
+        </div>
+      </form>
+	</body>
+</html>

@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+	<body>
+<!-- 화면에 입력된 데이터를 sampleName변수에 복사하여 post방식으로 /addSample 경로로 보낸다 -->
+		<form action = "/boardAdd" method="post">
+		<div>
+			<label>boardPw:</label>
+			<input type="password" name="boardPw">
+		</div>
+		<div>
+			<label>boardTitle:</label>
+			<input type="text" name="boardTitle">
+		</div>
+		<div>
+			<label>boardContent:</label>
+			<input type="text" name="boardContent">
+			</div>
+		<div>
+		<label>boardUser:</label>
+			<input type="text" name="boardUser">
+		</div>
+			<input type="submit" value="게시판등록">
+		</form> 
+	</body>
+</html>
