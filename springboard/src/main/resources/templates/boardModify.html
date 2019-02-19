@@ -1,31 +1,70 @@
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+<table class="table table-striped table-dark">
+			<div>
+		        <h3>상세정보</h3>
+		    </div>
+	<meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('#boardModifyBtn').click(function(){
+				$('#boardTitle').removeAttr('readonly');
+				$('#boardContent').removeAttr('readonly');
+				$('#boardPw').removeAttr('readonly');
+				$('#boardBtn').attr('type','submit');
+				$('#boardModifyBtn').attr('type','hidden');
+			});
+			
+	        $('#boardBtn').click(function(){
+	        	$('#boardModifyForm').submit(function(event){
+	        		if($('#boardPw').val().length<4){
+		            	$('#boardPw').attr('placeholder','4자리이상 입력해주세요.');
+		            	$('#boardPw').focus();
+		            	return false;
+	        		}else if($('#boardTitle').val().length<1){
+		            	$('#boardTitle').attr('placeholder','입력해주세요.');
+		            	$('#boardTitle').focus();
+		            	return false;
+		            }else if($('#boardContent').val().length<1){
+		            	$('#boardContent').attr('placeholder','입력해주세요.');
+		            	$('#boardContent').focus();
+		            	return false;
+		            }
+	        	});
+	        });
+	    });
+	</script>
 	<body>
-		<form action="/boardModify" method="post">
-		<input type="hidden" name="boardNo" th:value="${board.boardNo}">
-		<div class="form-group">
-            <label for="inputNo"></label>
-            <input type="hidden" class="form-control" name="boardNo" th:readonly="${board.boardNo}" readonly="readonly">
-        </div>
-		<div class="form-group">
-            <label for="inputTitle">title</label>
-            <input type="text" class="form-control" name="boardTitle" th:value="${board.boardTitle}">
-        </div>
-        <div class="form-group">
-            <label for="inputContent">content</label>
-            <input type="text" class="form-control" name="boardContent" th:value="${board.boardContent}">
-        </div>
-        <div class="form-group">
-            <label for="inputUser">name</label>
-            <input type="text" class="form-control" name="boardUser" th:value="${board.boardUser}" readonly="readonly">
-        </div>
-        <div class="form-group">
-            <label for="inputPw">password</label>
-        </div>
-            <input type="text" class="form-control" name="boardPw" th:value="${board.boardPw}">
-      	 	<input id="boardModifyBtn" class="btn btn-success btn-lg float-right" type="submit" value="수정하기"/>
-          <div class="form-group text-center">
-          <a class="btn btn-success btn-lg float-right" th:href="@{/boardDelete(boardNo=${board.boardNo})}">삭제</a> 
-        </div>
-      </form>
+		<form id="boardModifyForm" action="/boardModify" method="post">
+		
+			<input type="hidden" name="boardNo" th:value="${board.boardNo}">
+			<div class="form-group">
+	            <label for="inputNo"></label>
+	            <input id="boardNo" type="hidden" class="form-control" name="boardNo" th:readonly="${board.boardNo}" readonly="readonly">
+	        </div>
+			<div class="form-group">
+	            <label for="inputTitle">title</label>
+	            <input id="boardTitle" type="text" class="form-control" name="boardTitle" th:value="${board.boardTitle}" readonly="readonly">
+	        </div>
+	        <div class="form-group">
+	            <label for="inputContent">content</label>
+	            <input id="boardContent" type="text" class="form-control" name="boardContent" th:value="${board.boardContent}" readonly="readonly">
+	        </div>
+	        <div class="form-group">
+	            <label for="inputUser">name</label>
+	            <input id="boardUser" type="text" class="form-control" name="boardUser" th:value="${board.boardUser}" readonly="readonly">
+	        </div>
+	        <div class="form-group">
+	            <label for="inputPw">password</label>
+	            <input id="boardPw" type="text" class="form-control" name="boardPw" readonly="readonly">
+	        </div>
+	      	 	<input id="boardModifyBtn" class="btn btn-success btn-lg float-right" type="button" value="수정하기"/>
+	      	 	<input id="boardBtn" class="btn btn-success btn-lg float-right" type="hidden" value="수정완료"/>
+	        <div class="form-group text-center">
+	          <a class="btn btn-success btn-lg float-right" th:href="@{/boardDelete(boardNo=${board.boardNo})}">삭제</a> 
+	          <td>삭제버튼을 누르면 삭제화면으로 이동</td>
+	        </div>
+      	</form>	
 	</body>
 </html>

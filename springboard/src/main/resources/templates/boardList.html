@@ -1,23 +1,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <title>리스트</title>
+
 </head>
 <body>
-	<table border="1">
-		<tr>
-			<td>boardNo</td>
-			<td>boardTitle</td>
-			<td>boardUser</td>
-			<td>boardDate</td>
-		</tr>
-		<!-- map안의 list를 가져와서 사용 -->
-		<tr th:each="m : ${map.list}">
-			<td th:text="${m.boardNo}"></td>
-			<td><a th:href="@{/boardModify(boardNo=${m.boardNo})}" th:text="${m.boardTitle}"></a></td>
-			<td th:text="${m.boardUser}"></td>
-			<td th:text="${m.boardDate}"></td>
-		</tr>
+<div class="container">
+	<table class="table table-striped table-dark">
+  		<thead class="thead-dark">
+			<tr>
+				<td>boardNo</td>
+				<td>boardTitle</td>
+				<td>boardUser</td>
+				<td>boardDate</td>
+			</tr>
+			</thead>
+			<tbody>
+			<!-- map안의 list를 가져와서 사용 -->
+			<tr th:each="m : ${map.list}">
+				<td th:text="${m.boardNo}"></td>
+				<td><a th:href="@{/boardModify(boardNo=${m.boardNo})}" th:text="${m.boardTitle}"></a></td>
+				<td th:text="${m.boardUser}"></td>
+				<td th:text="${m.boardDate}"></td>
+			</tr>
+		</tbody>
 	</table>
 	<a th:href=@{/boardList}>처음으로</a>
 	<th:block th:if="${currentPage > 1}">
@@ -27,6 +34,9 @@
 		<a th:href="@{/boardList(currentPage=${currentPage+1})}">다음</a>
 	</th:block>
 	<a th:href="@{/boardList(currentPage=${lastPage})}">마지막</a>
-		
+	</div>	
+	<div class="text-center">
+	<a href="/boardAdd" class="btn btn-info" role="button">글쓰기</a>
+	</div>
 </body>
 </html>

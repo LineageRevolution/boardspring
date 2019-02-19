@@ -1,17 +1,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>리스트</title>
+<meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+	        $('#boardBtn').click(function(){
+	        	$('#boardRemoveForm').submit(function(event){
+	        		if($('#boardPw').val().length<4){
+		            	$('#boardPw').attr('placeholder','4자리이상 입력해주세요.');
+		            	$('#boardPw').focus();
+		            	return false;
+	        		}
+	        	});
+	        });
+	    });
+	</script>
 </head>
 <body>
-	<form action="/boardDelete" method="post">
+	<form id="boardRemoveForm" action="/boardDelete" method="post">
 		<div>
 			<label>비밀번호를 입력하세요:</label>
-			<input type="password" name="boardPw"/>
+			<input id="boardPw" type="password" name="boardPw"/>
 		</div>
 		<div>
 			<input type="hidden" name="boardNo" th:value="${board.boardNo}"/> 
-			<input type="submit" value="삭제하기"/>
+			<input id="boardBtn" type="submit" value="삭제하기"/>
 		</div>
 	</form>
 </body>
