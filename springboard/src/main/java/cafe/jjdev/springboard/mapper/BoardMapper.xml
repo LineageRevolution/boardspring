@@ -23,8 +23,7 @@
 			LIMIT #{currentPage}, #{rowPerPage}
 			
 	</select>
-	<select id="selectBoardCount"
-			resultType="int">
+	<select id="selectBoardCount" resultType="int">
 			SELECT 
 			COUNT(*)
 			FROM board

@@ -20,10 +20,11 @@
         </div>
         <div class="form-group">
             <label for="inputPw">password</label>
-            <input type="text" class="form-control" name="boardPw" th:value="${board.boardPw}">
         </div>
+            <input type="text" class="form-control" name="boardPw" th:value="${board.boardPw}">
+      	 	<input id="boardModifyBtn" class="btn btn-success btn-lg float-right" type="submit" value="수정하기"/>
           <div class="form-group text-center">
-            <input type="submit" value="수정"> 
+          <a class="btn btn-success btn-lg float-right" th:href="@{/boardDelete(boardNo=${board.boardNo})}">삭제</a> 
         </div>
       </form>
 	</body>

@@ -29,30 +29,22 @@ public class BoardService {
 		// 1 paging code 작성
 		final int Row_Per_Page = 10; //한 페이지에 넣어줄 행의 갯수를 설정 final로 선언하기 때문에 변경 불가
 		
-		int startPageNum=1;
-		int lastPageNum = Row_Per_Page; //마지막 페이지
-		if(currentPage> (Row_Per_Page/2)) { //Row_Per_Page를 2로 나누었을때 currentPage보다 작은경우 if문 실행
-			startPageNum= currentPage -((lastPageNum/2)-1); //
-			lastPageNum += (startPageNum-1);
-		}
-		currentPage = (currentPage-1)*Row_Per_Page;
+		int startNum = (currentPage-1)*Row_Per_Page;
+		
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("currentPage", currentPage); //attribute처럼 "current"변수를 선언한다
+		map.put("currentPage", startNum); //attribute처럼 "current"변수를 선언한다
 		map.put("rowPerPage", Row_Per_Page);
+		
 		//2
 		int boardCount = boardMapper.selectBoardCount();
 		int lastPage = (int)(Math.ceil(boardCount/Row_Per_Page)); //boardCount의 개수를 Row_Per_Page로 나눈값을 lastpage변수에 담는다
 		
-		if(currentPage >= (lastPage-4)) { //lastPage-4가 currentPage보다 작거나 같으면 if문 실행
-			lastPageNum = lastPage;
-		}
-		
+				
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		returnMap.put("list", boardMapper.selectBoardList(map));
 		returnMap.put("boardCount", boardCount);	
 		returnMap.put("lastPage", lastPage);
-		returnMap.put("lastPageNum", lastPageNum);
 		returnMap.put("currentPage", currentPage);
 		
 		return returnMap;

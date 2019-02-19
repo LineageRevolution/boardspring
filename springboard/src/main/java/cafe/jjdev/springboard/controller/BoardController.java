@@ -28,8 +28,10 @@ public class BoardController {
 		
 	    	Map<String, Object> returnMap = boardService.selectBoardList(currentPage);
 	    	model.addAttribute("map", returnMap); //request객체 대신 model객체에 값 셋팅
-	    	model.addAttribute("currentPage", currentPage);
-	        return "boardList";
+	    	model.addAttribute("currentPage", returnMap.get("currentPage"));
+	    	model.addAttribute("lastPage", returnMap.get("lastPage"));
+	    	model.addAttribute("boardCount", returnMap.get("boardCount"));
+	    	return "boardList";
 	    }
 	    // 입력(액션) 요청
 	    @RequestMapping()
@@ -56,7 +58,8 @@ public class BoardController {
 	    //삭제 폼
 	    @GetMapping("boardDelete")
 		public String removeBoardForm(Board board) {
-			return "boardRemove";
+			System.out.println(board.getBoardNo()+"<==boardNo");
+	    	return "boardRemove";
 		}
 	    //수정 폼
 	    @GetMapping("/boardModify")
