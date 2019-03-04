@@ -1,15 +1,21 @@
 package cafe.jjdev.springboard.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import cafe.jjdev.springboard.mapper.BoardMapper;
 import cafe.jjdev.springboard.vo.Board;
+import cafe.jjdev.springboard.vo.BoardRequest;
+import cafe.jjdev.springboard.vo.Boardfile;
 
 @Service
 @Transactional
@@ -50,8 +56,46 @@ public class BoardService {
 		return returnMap;
 	}
 	//보드 입력메서드
-	public int addBoard(Board board) {
-		return boardMapper.insertBoard(board);
+	public void addBoard(BoardRequest boardRequest, String path) {
+		//1
+		Board board = new Board();
+		board.setBoardTitle(boardRequest.getBoardTitle());
+		board.setBoardPw(boardRequest.getBoardPw());
+		board.setBoardUser(boardRequest.getBoardUser());
+		board.setBoardContent(boardRequest.getBoardContent());
+		System.out.println("addBoard메서드 실행"+board);
+		
+		boardMapper.insertBoard(board);
+		
+		//2
+		
+		List<MultipartFile> files = boardRequest.getFiles();
+		for(MultipartFile f : files) {
+			// f-> boardfile
+			Boardfile boardfile= new Boardfile();
+			boardfile.setBoardNo(board.getBoardNo());
+			boardfile.setFileSize(f.getSize());
+			boardfile.setFileType(f.getContentType());
+			
+			String originalFilename = f.getOriginalFilename();
+			int i = originalFilename.lastIndexOf(".");
+			
+			String ext = originalFilename.substring(i+1);
+			boardfile.setFileExt(ext);
+			String fileName = UUID.randomUUID().toString();
+			boardfile.setFileName(fileName);	
+			
+			boardMapper.insertBoardFile(boardfile);
+			// 전체작업이 롤백되면 파일삭제작업 직접해야함
+			// 3  파일저장
+			try {
+				f.transferTo(new File(path+"/"+fileName+"."+ext));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}		
 	}
 	//보드 삭제메서드
 	public int removeBoard(Board board) {

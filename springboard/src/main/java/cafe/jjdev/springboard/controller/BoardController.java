@@ -2,6 +2,8 @@ package cafe.jjdev.springboard.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cafe.jjdev.springboard.service.BoardService;
 import cafe.jjdev.springboard.vo.Board;
+import cafe.jjdev.springboard.vo.BoardRequest;
 
 @Controller
 public class BoardController {
@@ -34,9 +37,11 @@ public class BoardController {
 	    	return "boardList";
 	    }
 	    // 입력(액션) 요청
-	    @RequestMapping()
-	    public String boardAdd(Board board) {
-	    	boardService.addBoard(board);
+	    @RequestMapping(method = RequestMethod.POST)
+	    public String boardAdd(BoardRequest boardRequest, HttpServletRequest request) {	
+	    	String path = request.getSession().getServletContext().getRealPath("./upload");	 
+	    	System.out.println("boardAdd" +path);
+	    	boardService.addBoard(boardRequest,path);
 	        return "redirect:/boardList"; // 글입력후 "/boardList"로 리다이렉트(재요청)
 	    }
 	    // 입력페이지(form) 요청
@@ -51,7 +56,7 @@ public class BoardController {
 	    	System.out.println(board.getBoardNo()+"<--no");
 	    	System.out.println(board.getBoardPw()+"<--pw");
 	  	  int result = boardService.removeBoard(board);
-	  	  System.out.println("쿼리문 실행 결과 --> " + result);
+	  	  System.out.println("쿼리문 실행 결과 -->" + result);
 	  	  return "redirect:/boardList";
 	    }
 		

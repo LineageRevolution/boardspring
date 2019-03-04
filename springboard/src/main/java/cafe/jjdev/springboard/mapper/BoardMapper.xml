@@ -30,6 +30,9 @@
 
 	</select>
 	<insert id="insertBoard" parameterType="cafe.jjdev.springboard.vo.Board">
+	<selectKey keyProperty="boardNo" resultType="int" order="AFTER">
+		SELECT LAST_INSERT_ID() as boardNo
+	</selectKey>
 			INSERT 
 			INTO board
 				(board_pw 
@@ -43,7 +46,22 @@
 				,#{boardContent}
 				,#{boardUser}
 				,curDate())
-			
+	</insert>
+	<insert id="insertBoardFile" parameterType="cafe.jjdev.springboard.vo.Boardfile">
+			INSERT 
+			INTO boardfile
+				(board_no 
+				,file_name 
+				,file_ext 
+				,file_type 
+				,file_size
+				)values(
+				#{boardNo}
+				,#{fileName}
+				,#{fileExt}
+				,#{fileType}
+				,#{fileSize}
+				)
 	</insert>
 	<delete id="deleteBoard" parameterType="cafe.jjdev.springboard.vo.Board">
 			DELETE FROM board WHERE board_no=#{boardNo}

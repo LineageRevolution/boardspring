@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import cafe.jjdev.springboard.vo.Board;
+import cafe.jjdev.springboard.vo.BoardRequest;
+import cafe.jjdev.springboard.vo.Boardfile;
 @Mapper
 public interface BoardMapper {
 	Board selectBoard(int boardNo);
@@ -16,9 +18,12 @@ public interface BoardMapper {
 	
 	int insertBoard(Board board);
 	
+	int insertBoardFile(Boardfile boardfile);
+	
 	int deleteBoard(Board board);
 	
 	int updateBoard(Board board);
 	
 	int deleteBoardForm(Board board);
+	
 }
